@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>编辑日记</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/reset.css">
+    <link rel="stylesheet" href="__CSS__/diary_edit.css"/>
+</head>
+<body>
+    {include file="common/header" /}
+    <div class="edit-module">
+        <form action="uploadDiary" method="post">
+            <div class="upload-btn" id="upload-btn">提交</div>
+            <div class="title">
+                <span>标题：</span><input type="text" name="title" id="title">
+            </div>
+            <div class="place">
+                <span>旅游地点：</span><input type="text" name="place" id="place">
+            </div>
+            <textarea class="content" id="editor" name="content">
+
+            </textarea>
+        </form>
+    </div>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        let editor = CKEDITOR.replace( 'editor',{
+            customConfig : 'config.js'
+        });
+        //判断是否是管理员
+        $('#goPerson').click(function () {
+            $.post('isAdmin',function (res) {
+                if(res==false){
+                    location.href = 'personal';
+                }else {
+                    location.href = 'adminIndex';
+                }
+            });
+        });
+        $('#upload-btn').click(function () {
+            let data = editor.getData();
+            let reg1 = new RegExp(/&nbsp;/ig,"g");
+            let reg2 =  new RegExp("<p>","g");
+            let reg3 = new RegExp("</p>","g");
+            data=data.replace(reg3,"").replace(reg2,"").replace(reg1,"");
+            if($('#title').val()==""){
+                alert("未填写标题");
+            }else if($('#place').val()==""){
+                alert("未填写地点");
+            }else if(data.trim()==""){
+                alert("未编写日记");
+            }else {
+                let content = editor.getData();
+                let title = $('#title').val();
+                let place = $('#place').val();
+                let postData = {
+                    'title' : title,
+                    'place' : place,
+                    'content' : content
+                };
+                $.post('uploadDiary',postData,function (res) {
+                    if(res==true){
+                        alert("上传成功");
+                        location.reload();
+                    }else
+                        alert("上传失败");
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

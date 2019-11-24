@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/reset.css">
+    <link rel="stylesheet" href="__CSS__/user_person.css"/>
+</head>
+<body>
+    {include file="common/header" /}
+    <section>
+        <ul>
+            <li><a href="javascript:;" id="show-info">个人资料</a></li>
+            <li><a href="javascript:;" id="show-change">修改密码</a></li>
+            <li><a href="javascript:;" id="show-diary">已写日记</a></li>
+        </ul>
+    </section>
+    <aside>
+        <div class="person-info" id="person-info" style="display: block;">
+            <form method="post" id="update-user">
+                <table>
+                    <tr>
+                        <td class="right">用户名：</td>
+                        <td id="user-name">{$username|default="未知"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="name-error" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td class="right">性别：</td>
+                        <td id="user-sex">{$usersex|default="未知"}</td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td class="right">年龄：</td>
+                        <td id="user-age">{$userage|default="未知"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="age-error" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td class="right" style="vertical-align: top;">个人心情：</td>
+                        <td id="user-mood">{$usermood|default="未知"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="mood-error" class="error"></td>
+                    </tr>
+                    <tr style="line-height: 60px;">
+                        <td colspan="2">
+                            <span id="info-btn" style="margin-left: 20px;">确定</span>
+                            <span id="cancel-btn" style="margin-left: 20px;">取消</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <div class="edit-btn" id="edit-btn">编辑</div>
+        </div>
+        <div class="change-pass" id="change-pass" style="display: none;">
+            <form action="" method="post" id="update-pass">
+                <table>
+                    <tr>
+                        <td class="left">新密码：</td>
+                        <td><input type="password" id="new-pass1" name="newPass" placeholder="输入新密码(6-16位)" onfocus="placeholder=''" onblur="placeholder='输入新密码(6-16位)'"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="pass-error1" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td class="left">再次确认：</td>
+                        <td><input type="password" id="new-pass2" placeholder="再次输入" onfocus="placeholder=''" onblur="placeholder='再次输入'"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="pass-error2" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><span id="change-btn">确定</span></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+        <div class="up-diarys" id="up-diarys">
+            {volist name="diaries" id="diary"}
+                <div class="diary">
+                    <div class="title"><a href="showDiary?id={$diary.id}" class="link">{$diary.title}</a></div>
+                    <div class="date"><span>{$diary.create}</span></div>
+                    <div class="place">地点：<span>{$diary.place}</span></div>
+                    <div class="general">
+                        <p>
+                            {$diary.general}
+                        </p>
+                    </div>
+                </div>
+            {/volist}
+
+        <div class="page">{$page}</div>
+    </aside>
+
+
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__JS__/user_person.js"></script>
+<script type="text/javascript">
+    let isPage = {$goPage|default=false};
+    if(isPage==true){
+        $('#up-diarys').show();
+        $('#person-info').hide();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>管理页面</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/reset.css">
+    <link rel="stylesheet" href="__CSS__/admin_index.css"/>
+</head>
+<body>
+    {include file="common/header" /}
+    <section>
+        <ul>
+            <li><a href="javascript:;" id="show-info">个人资料</a></li>
+            <li><a href="javascript:;" id="show-change">修改密码</a></li>
+            <li><a href="javascript:;" id="show-user">管理用户</a></li>
+            <li><a href="javascript:;" id="show-diary">管理日记</a></li>
+        </ul>
+    </section>
+    <aside>
+        <div class="person-info" id="person-info" style="display: block;">
+            <form action="" method="post" id="update-user">
+                <table>
+                    <tr>
+                        <td class="right">用户名：</td>
+                        <td id="user-name">{$username|default="未知"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="name-error" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td class="right">性别：</td>
+                        <td id="user-sex">{$usersex|default="未知"}</td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td class="right">年龄：</td>
+                        <td id="user-age">{$userage|default="未知"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="age-error" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td class="right" style="vertical-align: top;">个人心情：</td>
+                        <td id="user-mood">{$usermood|default="未知"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="mood-error" class="error"></td>
+                    </tr>
+                    <tr style="line-height: 60px;">
+                        <td colspan="2">
+                            <span id="info-btn" style="margin-left: 20px;">确定</span>
+                            <span id="cancel-btn" style="margin-left: 20px;">取消</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <div class="edit-btn" id="edit-btn">编辑</div>
+        </div>
+        <div class="change-pass" id="change-pass" style="display: none;">
+            <form action="" method="post" id="update-pass">
+                <table>
+                    <tr>
+                        <td class="left">新密码：</td>
+                        <td><input type="password" id="new-pass1" name="newPass" placeholder="输入新密码(6-16位)" onfocus="placeholder=''" onblur="placeholder='输入新密码(6-16位)'"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="pass-error1" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td class="left">再次确认：</td>
+                        <td><input type="password" id="new-pass2" placeholder="再次输入" onfocus="placeholder=''" onblur="placeholder='再次输入'"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="pass-error2" class="error"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span id="change-btn" style="display: inline-block;">确定</span>
+                            <span id="reset-btn" style="display: inline-block; margin-left: 40px;">重置</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+        <div class="all-users" id="all-users">
+            <table>
+                <tr>
+                    <th>账户</th>
+                    <th>用户名</th>
+                    <th colspan="2">操作</th>
+                </tr>
+                {volist name='users' id='user'}
+                <tr>
+                    <td>{$user.account}</td>
+                    <td>{$user.user_info.name}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="forbid(/{$user.id}/,this)">{if condition="$user.forbid==0"}封禁{else/}解禁{/if}</a>
+                    </td>
+                    <td><a href="javascript:;" onclick="del(/{$user.id}/,this)">删除</a></td>
+                </tr>
+                {/volist}
+            </table>
+            <div class="page">{$page1}</div>
+        </div>
+        <div class="up-diarys" id="up-diarys">
+            {volist name="diaries" id="diary"}
+                <div class="diary">
+                    <div class="title"><a href="#" class="link">{$diary.title}</a></div>
+                    <div class="date"><span>{$diary.create}</span></div>
+                    <div class="author"><span>{$diary.user_info.name}</span></div>
+                    <div class="general">
+                        <p>
+                            {$diary.general}
+                        </p>
+                    </div>
+                    <div class="delete-btn" onclick="deleteDiary(/{$diary.id}/,this)">删除</div>
+                </div>
+            {/volist}
+            <div class="page">{$page2}</div>
+        </div>
+    </aside>
+
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__JS__/admin_index.js"></script>
+<script type="text/javascript">
+    let isPage = {$goPage|default=0};
+    if(isPage==1){
+        $('#all-users').show();
+        $('#person-info').hide();
+    }else if(isPage==2){
+        $('#up-diarys').show();
+        $('#person-info').hide();
+    }
+
+</script>
+</body>
+</html>

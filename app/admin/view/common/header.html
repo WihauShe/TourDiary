@@ -1,0 +1,17 @@
+<div id="header">
+    <ul class="common-part">
+        <li><a href="index">首页</a></li>
+        <li><a href="diaries">风采</a></li>
+        <li><a href="showEdit">书写</a></li>
+        <li><a href="#">搜索</a></li>
+    </ul>
+    <ul class="user-part">
+        {if condition="$Think.session.user_id!=null"}
+        <li style="letter-spacing: 2px;"><a href="logout">退出</a></li>
+        <li style="letter-spacing: 2px;">欢迎，<a href="adminIndex">{$Think.cookie.username}</a></li>
+        {else/}
+        <li><a href="showRegister">注册</a></li>
+        <li><a href="showLogin">登陆</a></li>
+        {/if}
+    </ul>
+</div>

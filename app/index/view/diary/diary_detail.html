@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>{$diary.title}</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/reset.css">
+    <link rel="stylesheet" href="__CSS__/diary_detail.css"/>
+</head>
+<body>
+    {include file="common/header" /}
+    <div class="diary">
+
+        <div class="title"><sapn>{$diary.title}</sapn></div>
+        <div class="date"><span>{$diary.create}</span></div>
+        <div class="author">作者：<span>{$diary.user_info.name}</span></div>
+        <div class="place">地点：<span>{$diary.place}</span></div>
+
+        <div class="content">
+            {$diary.content}
+        </div>
+    </div>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#show-edit').click(function () {
+            $.post('isLogin',function (res) {
+                if(res==false){
+                    alert("请先登录");
+                    location.href = "showLogin";
+                }else
+                    location.href = "showEdit";
+            })
+        });
+        //判断是否是管理员
+        $('#goPerson').click(function () {
+            $.post('isAdmin',function (res) {
+                if(res==false){
+                    location.href = 'personal';
+                }else {
+                    location.href = 'adminIndex';
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

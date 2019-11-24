@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>用户注册</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/reset.css">
+    <link rel="stylesheet" href="__CSS__/user_register.css"/>
+</head>
+<body>
+    {include file="common/header" /}
+    <div class="register-module">
+        <div class="register-top">用户注册</div>
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <td class="left">账户：</td>
+                    <td><input type="text" name="userAccount" id="useraccount" placeholder="邮箱/手机号" onfocus="this.placeholder=''" onblur="this.placeholder='邮箱/手机号'"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="error" id="account_error"></td>
+                </tr>
+                <tr>
+                    <td class="left">用户名：</td>
+                    <td><input type="text" name="userName" id="username" maxlength="20" placeholder="输入您的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='输入您的用户名'"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="error" id="name_error"></td>
+                </tr>
+                <tr>
+                    <td class="left">性别：</td>
+                    <td>
+                        <select id="usersex" name="userSex">
+                            <option value="0">  </option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="error"></td>
+                </tr>
+                <tr>
+                    <td class="left">年龄：</td>
+                    <td><input type="text" name="userAge" id="userage" value="0" oninput = "value=value.replace(/[^\d]/g,'')"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="error" id="age_error"></td>
+                </tr>
+                <tr>
+                    <td class="left">密码：</td>
+                    <td><input type="password" name="userPass" id="userpass1" placeholder="6-16位密码" onfocus="this.placeholder=''" onblur="this.placeholder='6-16位密码'"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="error" id="pass_error1"></td>
+                </tr>
+                <tr>
+                    <td class="left">确认密码：</td>
+                    <td><input type="password" id="userpass2" placeholder="再次输入密码" onfocus="this.placeholder=''" onblur="this.placeholder='再次输入密码'"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="error" id="pass_error2"></td>
+                </tr>
+            </table>
+        </form>
+        <div class="register-button" id="register-button">提交</div>
+        <div class="result"></div>
+    </div>
+
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__JS__/user_register.js"></script>
+</body>
+</html>
